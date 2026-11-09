@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Nepali Quiz</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f1f3f5;
+      text-align: center;
+      padding: 40px 15px;
+    }
+
+    .quiz-box {
+      max-width: 420px;
+      margin: auto;
+      background: white;
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 5px 20px #ccc;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      margin: 7px 0;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .answer {
+      background: #eee;
+    }
+
+    #nextBtn {
+      background: #222;
+      color: white;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="quiz-box">
+
+  <h1>🇳🇵 Nepali Quiz</h1>
+
+  <h2 id="question"></h2>
+
+  <div id="answers"></div>
+
+  <p id="result"></p>
+
+  <button id="nextBtn" onclick="nextQuestion()">Next ➡️</button>
+
+  <p>Question: <span id="number">1</span>/10</p>
+  <p>Score: <span id="score">0</span></p>
+
+</div>
+
+<script>
+
+const questions = [
+  {
+    question: "नेपालको राजधानी कुन हो?",
+    answers: ["पोखरा", "काठमाडौं", "विराटनगर", "ललितपुर"],
+    correct: "काठमाडौं"
+  },
+  {
+    question: "नेपालमा कति प्रदेश छन्?",
+    answers: ["5", "6", "7", "8"],
+    correct: "7"
+  },
+  {
+    question: "नेपालको राष्ट्रिय फूल कुन हो?",
+    answers: ["गुराँस", "कमल", "सुनाखरी", "गोदावरी"],
+    correct: "गुराँस"
+  },
+  {
+    question: "नेपालको राष्ट्रिय जनावर कुन हो?",
+    answers: ["गाई", "बाघ", "हात्ती", "घोडा"],
+    correct: "गाई"
+  },
+  {
+    question: "नेपालको सर्वोच्च शिखर कुन हो?",
+    answers: ["धौलागिरी", "सगरमाथा", "अन्नपूर्ण", "माछापुच्छ्रे"],
+    correct: "सगरमाथा"
+  },
+  {
+    question: "नेपालको मुद्रा कुन हो?",
+    answers: ["रुपैयाँ", "डलर", "येन", "युआन"],
+    correct: "रुपैयाँ"
+  },
+  {
+    question: "नेपालको राष्ट्रिय पक्षी कुन हो?",
+    answers: ["डाँफे", "काग", "मयूर", "चील"],
+    correct: "डाँफे"
+  },
+  {
+    question: "नेपालको झण्डा कस्तो आकारको छ?",
+    answers: ["गोलो", "आयताकार", "दुई त्रिकोण", "वर्गाकार"],
+    correct: "दुई त्रिकोण"
+  },
+  {
+    question: "नेपालको छिमेकी देशमध्ये एक कुन हो?",
+    answers: ["भारत", "जापान", "ब्राजिल", "अमेरिका"],
+    correct: "भारत"
+  },
+  {
+    question: "नेपालको राष्ट्रिय पक्षी कुन हो?",
+    answers: ["डाँफे", "काग", "मयूर", "चील"],
+    correct: "डाँफे"
+  }
+];
+
+let current = 0;
+let score = 0;
+
+function loadQuestion() {
+
+  document.getElementById("question").innerText =
+    questions[current].question;
+
+  document.getElementById("number").innerText =
+    current + 1;
+
+  const answersDiv =
+    document.getElementById("answers");
+
+  answersDiv.innerHTML = "";
+
+  questions[current].answers.forEach(function(answer) {
+
+    const button =
+      document.createElement("button");
+
+    button.innerText = answer;
+    button.className = "answer";
+
+    button.onclick = function() {
+      checkAnswer(answer);
+    };
+
+    answersDiv.appendChild(button);
+  });
+
+  document.getElementById("result").innerText = "";
+}
+
+function checkAnswer(answer) {
+
+  if (answer === questions[current].correct) {
+
+    score++;
+
+    document.getElementById("result").innerText =
+      "✅ सही उत्तर!";
+
+  } else {
+
+    document.getElementById("result").innerText =
+      "❌ गलत उत्तर!";
+  }
+
+  document.getElementById("score").innerText =
+    score;
+}
+
+function nextQuestion() {
+
+  current++;
+
+  if (current < questions.length) {
+
+    loadQuestion();
+
+  } else {
+
+    document.querySelector(".quiz-box").innerHTML = `
+
+      <h1>🎉 Quiz समाप्त!</h1>
+
+      <h2>तिम्रो Score: ${score}/10</h2>
+
+      <button onclick="location.reload()">
+        🔄 फेरि खेल्नुहोस्
+      </button>
+
+    `;
+  }
+}
+
+loadQuestion();
+
+</script>
+
+</body>
+</html>
